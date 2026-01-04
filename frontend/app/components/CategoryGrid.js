@@ -1,60 +1,66 @@
 import Link from "next/link";
 
-const categories = [
+const collections = [
   {
-    title: "Sofas",
-    slug: "sofas",
+    title: "Living Room",
     image:
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7", // sofa showroom
+      "https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a",
+    slug: "living",
   },
   {
     title: "Bedroom",
-    slug: "bedroom",
     image:
-      "https://images.unsplash.com/photo-1505693314120-0d443867891c", // bedroom bed
+      "https://images.unsplash.com/photo-1616594039964-ae9021a400a0",
+    slug: "bedroom",
   },
   {
     title: "Dining",
-    slug: "dining",
     image:
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c", // dining table
+      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c",
+    slug: "dining",
   },
   {
     title: "Storage",
-    slug: "storage",
     image:
-      "https://www.zeysey.com/storage/image/blog/01KA16ZZN8K2CPTACP0SR5DV95.jpg", // cabinets / storage
+      "https://i5.walmartimages.com/asr/72f22363-db49-4be7-be2f-31114d29d3be.1e442c45d0eebde3b5a7a7f8d2c19807.jpeg",
+    slug: "storage",
   },
 ];
 
-export default function CategoryGrid() {
+export default function CollectionGrid() {
   return (
-    <section className="max-w-7xl mx-auto px-6 py-16">
-      <h2 className="text-3xl font-bold mb-8">
-        Shop by Category
-      </h2>
+    <section
+      id="collections"
+      className="bg-white py-20"
+    >
+      <div className="max-w-7xl mx-auto px-6">
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
-        {categories.map((cat) => (
-          <Link
-            key={cat.slug}
-            href={`/furniture/${cat.slug}`}
-            className="group block"
-          >
-            <div className="overflow-hidden rounded-lg bg-gray-100">
-              <img
-                src={cat.image}
-                alt={cat.title}
-                className="h-56 w-full object-cover group-hover:scale-105 transition"
-                loading="lazy"
-              />
-            </div>
+        <h2 className="text-4xl font-serif font-semibold mb-12">
+          Furniture Collection
+        </h2>
 
-            <h3 className="mt-4 text-lg font-semibold text-center">
-              {cat.title}
-            </h3>
-          </Link>
-        ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+          {collections.map((item) => (
+            <Link
+              key={item.slug}
+              href={`/furniture/${item.slug}`}
+              className="group"
+            >
+              <div className="overflow-hidden rounded-xl h-[420px]">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                />
+              </div>
+
+              <h3 className="mt-5 text-xl font-medium">
+                {item.title}
+              </h3>
+            </Link>
+          ))}
+        </div>
+
       </div>
     </section>
   );

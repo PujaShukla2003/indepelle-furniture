@@ -1,5 +1,7 @@
 import Hero from "./components/Hero";
 import CategoryGrid from "./components/CategoryGrid";
+import EditorialGrid from "./components/EditorialGrid";
+
 
 export const metadata = {
   title: "Indepelle Furniture | Buy Furniture Online",
@@ -12,6 +14,7 @@ export default function Home() {
     <main>
       <Hero />
        <CategoryGrid />
+        <EditorialGrid />
     </main>
   );
 }
