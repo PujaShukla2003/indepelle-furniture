@@ -54,12 +54,18 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMobile, setOpenMobile] = useState(null);
 
+  // ✅ MOBILE MENU CLOSE HELPER (ADDED, NOTHING REMOVED)
+  const closeMobileMenu = () => {
+    setMobileOpen(false);
+    setOpenMobile(null);
+  };
+
   return (
     <nav className="bg-black border-b border-[#2a2a2a]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[72px] flex items-center justify-between">
 
         {/* LOGO */}
-        <Link href="/" className="flex items-center">
+        <Link href="/" className="flex items-center" onClick={closeMobileMenu}>
           <Image
             src="/logo.webp"
             alt="Indepelle Logo"
@@ -78,7 +84,6 @@ export default function Navbar() {
             </Link>
           </li>
 
-          {/* 🔥 INTERIORS LINK ADDED */}
           <li>
             <Link href="/interiors" className="hover:text-[#FFD978]">
               Interiors
@@ -159,12 +164,12 @@ export default function Navbar() {
       {/* MOBILE MENU */}
       {mobileOpen && (
         <div className="lg:hidden bg-black border-t border-[#333] px-4 py-4 text-[#F5C76A]">
-          <Link href="/" className="block py-2">
+
+          <Link href="/" className="block py-2" onClick={closeMobileMenu}>
             Home
           </Link>
 
-          {/* 🔥 INTERIORS LINK (MOBILE) */}
-          <Link href="/interiors" className="block py-2">
+          <Link href="/interiors" className="block py-2" onClick={closeMobileMenu}>
             Interiors
           </Link>
 
@@ -182,7 +187,11 @@ export default function Navbar() {
 
               {openMobile === m.title && (
                 <div className="pl-4 pb-2 text-sm">
-                  <Link href={m.slug} className="block py-1 font-semibold">
+                  <Link
+                    href={m.slug}
+                    className="block py-1 font-semibold"
+                    onClick={closeMobileMenu}
+                  >
                     View All
                   </Link>
 
@@ -191,6 +200,7 @@ export default function Navbar() {
                       key={item}
                       href={`${m.slug}/${item}`}
                       className="block py-1 capitalize text-[#cfae63]"
+                      onClick={closeMobileMenu}
                     >
                       {item.replace(/-/g, " ")}
                     </Link>
@@ -200,15 +210,22 @@ export default function Navbar() {
             </div>
           ))}
 
-          <Link href="/collaborations" className="block py-2">
+          <Link
+            href="/collaborations"
+            className="block py-2"
+            onClick={closeMobileMenu}
+          >
             Collaborations
           </Link>
 
           <div className="mt-4 flex gap-4">
-            <Link href="/login">Login</Link>
+            <Link href="/login" onClick={closeMobileMenu}>
+              Login
+            </Link>
             <Link
               href="/signup"
               className="border border-[#F5C76A] px-4 py-2 rounded"
+              onClick={closeMobileMenu}
             >
               Sign Up
             </Link>
