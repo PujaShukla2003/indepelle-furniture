@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 
 const menu = [
@@ -54,42 +55,60 @@ export default function Navbar() {
   const [openMobile, setOpenMobile] = useState(null);
 
   return (
-    <nav className="border-b bg-white sticky top-0 z-50">
+    <nav className="bg-black border-b border-[#2a2a2a]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[72px] flex items-center justify-between">
 
         {/* LOGO */}
-        <Link href="/" className="text-2xl font-bold tracking-wide">
-          Indepelle
+        <Link href="/" className="flex items-center">
+          <Image
+            src="/logo.webp"
+            alt="Indepelle Logo"
+            width={160}
+            height={40}
+            priority
+            className="object-contain"
+          />
         </Link>
 
         {/* DESKTOP MENU */}
-        <ul className="hidden lg:flex gap-10 text-[15px] font-medium h-full items-center">
+        <ul className="hidden lg:flex gap-10 text-[15px] font-medium h-full items-center text-[#F5C76A]">
           <li>
-            <Link href="/" className="hover:underline">
+            <Link href="/" className="hover:text-[#FFD978]">
               Home
+            </Link>
+          </li>
+
+          {/* 🔥 INTERIORS LINK ADDED */}
+          <li>
+            <Link href="/interiors" className="hover:text-[#FFD978]">
+              Interiors
             </Link>
           </li>
 
           {menu.map((m) => (
             <li
               key={m.title}
-              className="relative"
+              className="relative h-full flex items-center"
               onMouseEnter={() => setOpenDesktop(m.title)}
               onMouseLeave={() => setOpenDesktop(null)}
             >
-              <Link href={m.slug} className="hover:underline">
+              <Link href={m.slug} className="hover:text-[#FFD978]">
                 {m.title}
               </Link>
 
               {/* DESKTOP DROPDOWN */}
               <div
-                className={`absolute top-full left-0 mt-4 w-56 bg-white border shadow-lg rounded transition-all
-                ${openDesktop === m.title ? "opacity-100 visible" : "opacity-0 invisible"}`}
+                className={`absolute top-full left-0 mt-4 w-56 bg-black border border-[#333] shadow-xl rounded transition-all
+                ${
+                  openDesktop === m.title
+                    ? "opacity-100 visible translate-y-0"
+                    : "opacity-0 invisible translate-y-2"
+                }`}
               >
                 <div className="py-3">
                   <Link
                     href={m.slug}
-                    className="block px-5 py-2 font-semibold hover:bg-gray-100"
+                    className="block px-5 py-2 font-semibold text-[#F5C76A] hover:bg-[#111]"
                   >
                     View All
                   </Link>
@@ -98,7 +117,7 @@ export default function Navbar() {
                     <Link
                       key={item}
                       href={`${m.slug}/${item}`}
-                      className="block px-5 py-2 text-sm capitalize hover:bg-gray-100"
+                      className="block px-5 py-2 text-sm capitalize text-[#F5C76A] hover:bg-[#111]"
                     >
                       {item.replace(/-/g, " ")}
                     </Link>
@@ -109,18 +128,20 @@ export default function Navbar() {
           ))}
 
           <li>
-            <Link href="/collaborations" className="hover:underline">
+            <Link href="/collaborations" className="hover:text-[#FFD978]">
               Collaborations
             </Link>
           </li>
         </ul>
 
         {/* DESKTOP AUTH */}
-        <div className="hidden lg:flex gap-5 items-center text-sm">
-          <Link href="/login">Login</Link>
+        <div className="hidden lg:flex gap-6 items-center text-sm text-[#F5C76A]">
+          <Link href="/login" className="hover:text-[#FFD978]">
+            Login
+          </Link>
           <Link
             href="/signup"
-            className="bg-black text-white px-5 py-2 rounded"
+            className="border border-[#F5C76A] px-5 py-2 rounded hover:bg-[#F5C76A] hover:text-black transition"
           >
             Sign Up
           </Link>
@@ -128,7 +149,7 @@ export default function Navbar() {
 
         {/* MOBILE HAMBURGER */}
         <button
-          className="lg:hidden text-2xl"
+          className="lg:hidden text-2xl text-[#F5C76A]"
           onClick={() => setMobileOpen(!mobileOpen)}
         >
           ☰
@@ -137,9 +158,14 @@ export default function Navbar() {
 
       {/* MOBILE MENU */}
       {mobileOpen && (
-        <div className="lg:hidden border-t bg-white px-4 py-4">
-          <Link href="/" className="block py-2 font-medium">
+        <div className="lg:hidden bg-black border-t border-[#333] px-4 py-4 text-[#F5C76A]">
+          <Link href="/" className="block py-2">
             Home
+          </Link>
+
+          {/* 🔥 INTERIORS LINK (MOBILE) */}
+          <Link href="/interiors" className="block py-2">
+            Interiors
           </Link>
 
           {menu.map((m) => (
@@ -148,18 +174,15 @@ export default function Navbar() {
                 onClick={() =>
                   setOpenMobile(openMobile === m.title ? null : m.title)
                 }
-                className="w-full text-left py-2 font-medium flex justify-between"
+                className="w-full text-left py-2 flex justify-between"
               >
                 {m.title}
                 <span>{openMobile === m.title ? "−" : "+"}</span>
               </button>
 
               {openMobile === m.title && (
-                <div className="pl-4 pb-2">
-                  <Link
-                    href={m.slug}
-                    className="block py-1 text-sm font-semibold"
-                  >
+                <div className="pl-4 pb-2 text-sm">
+                  <Link href={m.slug} className="block py-1 font-semibold">
                     View All
                   </Link>
 
@@ -167,7 +190,7 @@ export default function Navbar() {
                     <Link
                       key={item}
                       href={`${m.slug}/${item}`}
-                      className="block py-1 text-sm capitalize text-gray-600"
+                      className="block py-1 capitalize text-[#cfae63]"
                     >
                       {item.replace(/-/g, " ")}
                     </Link>
@@ -177,7 +200,7 @@ export default function Navbar() {
             </div>
           ))}
 
-          <Link href="/collaborations" className="block py-2 font-medium">
+          <Link href="/collaborations" className="block py-2">
             Collaborations
           </Link>
 
@@ -185,7 +208,7 @@ export default function Navbar() {
             <Link href="/login">Login</Link>
             <Link
               href="/signup"
-              className="bg-black text-white px-4 py-2 rounded"
+              className="border border-[#F5C76A] px-4 py-2 rounded"
             >
               Sign Up
             </Link>
