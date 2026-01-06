@@ -54,6 +54,12 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMobile, setOpenMobile] = useState(null);
 
+  // ✅ MOBILE MENU CLOSE HELPER (ADDED, NOTHING REMOVED)
+  const closeMobileMenu = () => {
+    setMobileOpen(false);
+    setOpenMobile(null);
+  };
+
   return (
     <>
       {/* ================= LOGO BAR ================= */}
