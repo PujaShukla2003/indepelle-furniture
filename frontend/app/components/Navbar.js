@@ -54,12 +54,6 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMobile, setOpenMobile] = useState(null);
 
-  // ✅ MOBILE MENU CLOSE HELPER (ADDED, NOTHING REMOVED)
-  const closeMobileMenu = () => {
-    setMobileOpen(false);
-    setOpenMobile(null);
-  };
-
   return (
     <>
       {/* ================= LOGO BAR ================= */}
@@ -78,12 +72,21 @@ export default function Navbar() {
 
       {/* ================= NAVBAR ================= */}
       <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 h-[64px] flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-6 h-[64px] flex items-center">
 
-          {/* DESKTOP MENU */}
-          <ul className="hidden lg:flex gap-8 text-[15px] font-bold text-black h-full items-center">
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/interiors">Interiors</Link></li>
+          {/* CENTER MENU */}
+          <ul className="hidden lg:flex mx-auto gap-8 text-[15px] font-bold text-black h-full items-center">
+            <li>
+              <Link href="/" className="whitespace-nowrap">
+                Home
+              </Link>
+            </li>
+
+            <li>
+              <Link href="/interiors" className="whitespace-nowrap">
+                Interiors
+              </Link>
+            </li>
 
             {menu.map((m) => (
               <li
@@ -92,7 +95,12 @@ export default function Navbar() {
                 onMouseEnter={() => setOpenDesktop(m.title)}
                 onMouseLeave={() => setOpenDesktop(null)}
               >
-                <Link href={m.slug}>{m.title}</Link>
+                <Link
+                  href={m.slug}
+                  className="whitespace-nowrap"
+                >
+                  {m.title}
+                </Link>
 
                 {/* DROPDOWN */}
                 <div
@@ -125,11 +133,18 @@ export default function Navbar() {
               </li>
             ))}
 
-            <li><Link href="/collaborations">Collaborations</Link></li>
+            <li>
+              <Link
+                href="/collaborations"
+                className="whitespace-nowrap"
+              >
+                Collaborations
+              </Link>
+            </li>
           </ul>
 
-          {/* AUTH */}
-          <div className="hidden lg:flex gap-6 items-center text-sm font-bold">
+          {/* RIGHT AUTH */}
+          <div className="hidden lg:flex gap-6 items-center text-sm font-bold ml-auto">
             <Link href="/login">Login</Link>
             <Link
               href="/signup"
@@ -141,14 +156,14 @@ export default function Navbar() {
 
           {/* MOBILE BUTTON */}
           <button
-            className="lg:hidden text-2xl"
+            className="lg:hidden text-2xl ml-auto"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             ☰
           </button>
         </div>
 
-        {/* MOBILE MENU */}
+        {/* ================= MOBILE MENU ================= */}
         {mobileOpen && (
           <div className="lg:hidden bg-white border-t px-4 py-4 font-bold">
             <Link href="/" className="block py-2">Home</Link>
