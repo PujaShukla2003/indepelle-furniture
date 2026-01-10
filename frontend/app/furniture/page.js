@@ -1,59 +1,38 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
-import { products } from "../data/products";
-import { useState } from "react";
+
+const categories = [
+  { name: "Sofas", slug: "sofas", image: "/images/furnitures/sofas/premium_photo-1683141435678-2a8de9e6790a.avif" },
+  { name: "Chairs", slug: "chairs", image: "/images/furnitures/chairs/premium_photo-1705169538590-d1a4cecf7bd8.avif" },
+  { name: "Beds", slug: "beds", image: "/images/furnitures/beds/photo-1680503146476-abb8c752e1f4.avif" },
+  { name: "Dining Set", slug: "dining-set", image: "/images/furnitures/dining-set/photo-1740009209655-60e30235baae.avif" },
+  { name: "Bar Stools", slug: "bar-stools", image: "/images/furnitures/bar-stools/photo-1720694924759-2a2daaa98987.avif" },
+  { name: "Couches", slug: "couches", image: "/images/furnitures/couches/premium_photo-1661847617667-d98f3c976773.avif" },
+  { name: "Home Theatre Seating", slug: "home-theatre-seating", image: "/images/furnitures/home-theatre-seating/premium_photo-1661962302410-36d3325cf9ce.avif" },
+  { name: "Sofa Chairs", slug: "sofa-chairs", image: "/images/furnitures/sofa-chairs/premium_photo-1683141512435-4e4e8fba4c34.avif" },
+  { name: "Storage", slug: "storage", image: "/images/furnitures/storage/photo-1677413613795-abf33246150f.avif" },
+];
 
 export default function FurniturePage() {
-  const [sort, setSort] = useState("featured");
-
-  let sortedProducts = [...products];
-
-  if (sort === "price-low") {
-    sortedProducts.sort((a, b) => a.price - b.price);
-  }
-
-  if (sort === "price-high") {
-    sortedProducts.sort((a, b) => b.price - a.price);
-  }
-
   return (
-    <section className="max-w-7xl mx-auto px-6 py-12">
-      {/* HEADER */}
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">All Furniture</h1>
+    <section className="max-w-7xl mx-auto px-6 py-16">
+      <h1 className="text-4xl font-serif mb-12">All Furniture</h1>
 
-        <select
-          value={sort}
-          onChange={(e) => setSort(e.target.value)}
-          className="border px-4 py-2 rounded"
-        >
-          <option value="featured">Featured</option>
-          <option value="price-low">Price: Low to High</option>
-          <option value="price-high">Price: High to Low</option>
-        </select>
-      </div>
-
-      {/* PRODUCT GRID */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {sortedProducts.map((product) => (
+        {categories.map((cat) => (
           <Link
-            key={product.id}
-            href={`/product/${product.id}`}
-            className="group"
+            key={cat.slug}
+            href={`/furniture/${cat.slug}`}
+            className="rounded-2xl overflow-hidden border hover:shadow-xl transition"
           >
-            <div className="overflow-hidden rounded-xl bg-gray-100">
-              <img
-                src={product.images[0]}
-                alt={product.name}
-                className="h-72 w-full object-cover group-hover:scale-105 transition"
-              />
-            </div>
-
-            <h3 className="mt-4 font-semibold">{product.name}</h3>
-            <p className="text-gray-600">
-              ₹{product.price.toLocaleString()}
-            </p>
+            <Image
+              src={cat.image}
+              alt={cat.name}
+              width={600}
+              height={400}
+              className="object-cover w-full h-72"
+            />
+            <div className="p-4 font-semibold text-lg">{cat.name}</div>
           </Link>
         ))}
       </div>

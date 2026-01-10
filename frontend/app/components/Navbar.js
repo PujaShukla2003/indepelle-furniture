@@ -4,50 +4,53 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 
+/* ================= MENU DATA ================= */
+
 const menu = [
+  {
+    title: "Interiors",
+    slug: "/interiors",
+    items: [
+      { name: "Bathroom", link: "/interiors/bathroom" },
+      { name: "Bedroom", link: "/interiors/bedroom" },
+      { name: "Kitchen", link: "/interiors/kitchen" },
+      { name: "Living", link: "/interiors/living" },
+      { name: "Office", link: "/interiors/office" },
+    ],
+  },
   {
     title: "Furniture",
     slug: "/furniture",
-    items: ["sofas", "chairs", "tables", "beds", "dining"],
+    items: [
+      { name: "Sofas", link: "/furniture/sofas" },
+      { name: "Chairs", link: "/furniture/chairs" },
+      { name: "Beds", link: "/furniture/beds" },
+      { name: "Dining Set", link: "/furniture/dining-set" },
+      { name: "Bar Stools", link: "/furniture/bar-stools" },
+      { name: "Couches", link: "/furniture/couches" },
+      { name: "Home Theatre Seating", link: "/furniture/home-theatre-seating" },
+      { name: "Sofa Chairs", link: "/furniture/sofa-chairs" },
+      { name: "Storage", link: "/furniture/storage" },
+    ],
   },
   {
     title: "Living",
     slug: "/living",
-    items: ["organisers", "trays", "clocks", "storage"],
+    items: [
+      { name: "Carpets", link: "/living/carpets" },
+      { name: "Rugs", link: "/living/rugs" },
+    ],
   },
   {
     title: "Home Office",
     slug: "/home-office",
     items: [
-      "desk-caddies",
-      "tissue-boxes",
-      "pen-holders",
-      "mouse-pads",
-      "waste-bins",
+      { name: "Office Furniture", link: "/interiors/office" },
     ],
-  },
-  {
-    title: "Travel",
-    slug: "/travel",
-    items: [
-      "wallets",
-      "laptop-bags",
-      "tote-bags",
-      "duffle-bags",
-      "travel-kits",
-    ],
-  },
-  {
-    title: "Bar",
-    slug: "/bar",
-    items: ["bar-trolley", "bar-cabinets", "bar-stools", "bar-counter"],
-  },
-  {
-    title: "Gifting",
-    slug: "/gifting",
-    items: ["gift-sets", "corporate-gifts", "festive-gifts"],
   },
 ];
+
+/* ================= COMPONENT ================= */
 
 export default function Navbar() {
   const [openDesktop, setOpenDesktop] = useState(null);
@@ -56,37 +59,27 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ================= LOGO BAR ================= */}
-      <div className="w-full bg-black">
-        <Link href="/" className="block w-full">
+      {/* ===== LOGO BAR ===== */}
+      <div className="bg-black flex justify-center py-4">
+        <Link href="/">
           <Image
             src="/logo.webp"
-            alt="Indepelle Logo"
-            width={1920}
-            height={120}
+            alt="Indepelle"
+            width={260}
+            height={80}
             priority
-            className="w-full h-[120px] object-contain"
           />
         </Link>
       </div>
 
       {/* ================= NAVBAR ================= */}
       <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 h-[64px] flex items-center">
+        <div className="max-w-7xl mx-auto px-4 h-[64px] flex items-center justify-between">
 
-          {/* CENTER MENU */}
-          <ul className="hidden lg:flex mx-auto gap-8 text-[15px] font-bold text-black h-full items-center">
-            <li>
-              <Link href="/" className="whitespace-nowrap">
-                Home
-              </Link>
-            </li>
-
-            <li>
-              <Link href="/interiors" className="whitespace-nowrap">
-                Interiors
-              </Link>
-            </li>
+          {/* DESKTOP MENU */}
+          <ul className="hidden lg:flex gap-8 text-[15px] font-bold text-black h-full items-center">
+            <li><Link href="/">Home</Link></li>
+            <li><Link href="/interiors">Interiors</Link></li>
 
             {menu.map((m) => (
               <li
@@ -95,60 +88,47 @@ export default function Navbar() {
                 onMouseEnter={() => setOpenDesktop(m.title)}
                 onMouseLeave={() => setOpenDesktop(null)}
               >
-                <Link
-                  href={m.slug}
-                  className="whitespace-nowrap"
-                >
-                  {m.title}
-                </Link>
+                <Link href={m.slug}>{m.title}</Link>
 
-                {/* DROPDOWN */}
-                <div
-                  className={`absolute top-full left-0 mt-3 w-56 bg-white border shadow-xl rounded transition-all
-                  ${
-                    openDesktop === m.title
-                      ? "opacity-100 visible translate-y-0"
-                      : "opacity-0 invisible translate-y-2"
-                  }`}
-                >
-                  <div className="py-3">
-                    <Link
-                      href={m.slug}
-                      className="block px-5 py-2 font-semibold hover:bg-gray-100"
-                    >
-                      View All
-                    </Link>
+    {/* DROPDOWN */}
+    <div
+      className={`absolute left-0 top-full mt-2 w-64 rounded-xl border bg-white shadow-xl
+      transition-all duration-200
+      ${
+        openDesktop === m.title
+          ? "opacity-100 visible translate-y-0"
+          : "opacity-0 invisible translate-y-2 pointer-events-none"
+      }`}
+    >
+      <Link
+        href={m.slug}
+        className="block px-5 py-3 font-semibold hover:bg-gray-50"
+      >
+        View All
+      </Link>
 
-                    {m.items.map((item) => (
-                      <Link
-                        key={item}
-                        href={`${m.slug}/${item}`}
-                        className="block px-5 py-2 text-sm capitalize hover:bg-gray-100"
-                      >
-                        {item.replace(/-/g, " ")}
-                      </Link>
-                    ))}
-                  </div>
-                </div>
-              </li>
-            ))}
+      {m.items.map((item) => (
+        <Link
+          key={item.name}
+          href={item.link}
+          className="block px-5 py-2 text-sm hover:bg-gray-50"
+        >
+          {item.name}
+        </Link>
+      ))}
+    </div>
+  </li>
+))}
 
-            <li>
-              <Link
-                href="/collaborations"
-                className="whitespace-nowrap"
-              >
-                Collaborations
-              </Link>
-            </li>
+            <li><Link href="/collaborations">Collaborations</Link></li>
           </ul>
 
-          {/* RIGHT AUTH */}
-          <div className="hidden lg:flex gap-6 items-center text-sm font-bold ml-auto">
+          {/* AUTH */}
+          <div className="hidden lg:flex gap-6 items-center text-sm font-bold">
             <Link href="/login">Login</Link>
             <Link
               href="/signup"
-              className="border border-black px-5 py-2 rounded hover:bg-black hover:text-white transition"
+              className="border border-black px-6 py-2 rounded-full hover:bg-black hover:text-white transition"
             >
               Sign Up
             </Link>
@@ -156,23 +136,24 @@ export default function Navbar() {
 
           {/* MOBILE BUTTON */}
           <button
-            className="lg:hidden text-2xl ml-auto"
+            className="lg:hidden text-2xl"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             ☰
           </button>
         </div>
 
-        {/* ================= MOBILE MENU ================= */}
+        {/* MOBILE MENU */}
         {mobileOpen && (
-          <div className="lg:hidden bg-white border-t px-4 py-4 font-bold">
-            <Link href="/" className="block py-2">Home</Link>
-            <Link href="/interiors" className="block py-2">Interiors</Link>
+          <div className="lg:hidden bg-white border-t px-6 py-6 space-y-4 font-semibold">
+
+            <MobileLink name="Home" link="/" />
+            <MobileLink name="About" link="/about" />
 
             {menu.map((m) => (
               <div key={m.title}>
                 <button
-                  className="w-full text-left py-2 flex justify-between"
+                  className="w-full flex justify-between py-2"
                   onClick={() =>
                     setOpenMobile(openMobile === m.title ? null : m.title)
                   }
@@ -182,17 +163,11 @@ export default function Navbar() {
                 </button>
 
                 {openMobile === m.title && (
-                  <div className="pl-4 pb-2 text-sm font-normal">
-                    <Link href={m.slug} className="block py-1 font-semibold">
-                      View All
-                    </Link>
+                  <div className="pl-4 space-y-2 text-sm">
+                    <Link href={m.slug}>View All</Link>
                     {m.items.map((item) => (
-                      <Link
-                        key={item}
-                        href={`${m.slug}/${item}`}
-                        className="block py-1 capitalize"
-                      >
-                        {item.replace(/-/g, " ")}
+                      <Link key={item.name} href={item.link}>
+                        {item.name}
                       </Link>
                     ))}
                   </div>
@@ -200,16 +175,11 @@ export default function Navbar() {
               </div>
             ))}
 
-            <Link href="/collaborations" className="block py-2">
-              Collaborations
-            </Link>
+            <MobileLink name="Contact" link="/contact" />
 
-            <div className="mt-4 flex gap-4">
+            <div className="pt-4 flex gap-4">
               <Link href="/login">Login</Link>
-              <Link
-                href="/signup"
-                className="border border-black px-4 py-2 rounded"
-              >
+              <Link href="/signup" className="border px-4 py-2 rounded-full">
                 Sign Up
               </Link>
             </div>
@@ -217,5 +187,24 @@ export default function Navbar() {
         )}
       </nav>
     </>
+  );
+}
+
+/* ===== HELPERS ===== */
+
+function NavLink({ name, link }) {
+  return (
+    <li className="relative group">
+      <Link href={link}>{name}</Link>
+      <span className="absolute left-0 -bottom-1 w-0 h-[2px] bg-black transition-all group-hover:w-full" />
+    </li>
+  );
+}
+
+function MobileLink({ name, link }) {
+  return (
+    <Link href={link} className="block py-2">
+      {name}
+    </Link>
   );
 }

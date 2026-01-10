@@ -1,66 +1,53 @@
-"use client";
+import fs from "fs";
+import path from "path";
+import Image from "next/image";
 
-import { useParams } from "next/navigation";
-import Link from "next/link";
-import { products } from "../../data/products";
+export default function LivingCategoryPage({ params }) {
+  const { category } = params;
 
-export default function LivingCategoryPage() {
-  const { category } = useParams();
-
-  const filteredProducts = products.filter(
-    (p) => p.section === "living" && p.category === category
+  // ✅ CORRECT FOLDER (decor)
+  const folderPath = path.join(
+    process.cwd(),
+    "public/images/decor",
+    category
   );
 
-  if (!filteredProducts.length) {
+  if (!fs.existsSync(folderPath)) {
     return (
-      <section className="max-w-7xl mx-auto px-6 py-20 text-center">
-        <h1 className="text-3xl font-semibold capitalize mb-4">
-          {category.replace("-", " ")}
+      <div className="max-w-7xl mx-auto px-6 py-20">
+        <h1 className="text-3xl font-semibold">
+          Category not found
         </h1>
-        <p className="text-gray-600 mb-6">
-          No products found in this category.
-        </p>
-
-        <Link
-          href="/living"
-          className="inline-block bg-black text-white px-6 py-3 rounded"
-        >
-          Back to Living
-        </Link>
-      </section>
+      </div>
     );
   }
 
+  const images = fs
+    .readdirSync(folderPath)
+    .filter((file) =>
+      /\.(jpg|jpeg|png|webp|avif)$/i.test(file)
+    );
+
   return (
-    <section className="max-w-7xl mx-auto px-6 py-14">
-      <h1 className="text-3xl font-serif mb-10 capitalize">
-        {category.replace("-", " ")}
+    <section className="max-w-7xl mx-auto px-6 py-16">
+      <h1 className="text-4xl font-serif capitalize mb-10">
+        {category.replaceAll("-", " ")}
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-        {filteredProducts.map((product) => (
-          <Link
-            key={product.id}
-            href={`/product/${product.id}`}
-            className="group"
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        {images.map((img, i) => (
+          <div
+            key={i}
+            className="rounded-2xl overflow-hidden border hover:shadow-xl transition"
           >
-            <div className="overflow-hidden rounded-xl bg-gray-100">
-              <img
-                src={product.images[0]}
-                alt={product.name}
-                className="h-72 w-full object-cover group-hover:scale-105 transition"
-              />
-            </div>
-
-            <div className="mt-4">
-              <h3 className="text-lg font-medium">
-                {product.name}
-              </h3>
-              <p className="text-gray-600">
-                ₹{product.price.toLocaleString()}
-              </p>
-            </div>
-          </Link>
+            <Image
+              src={`/images/decor/${category}/${img}`}   // ✅ FIX
+              alt={category}
+              width={600}
+              height={400}
+              className="object-cover w-full h-72 hover:scale-105 transition"
+            />
+          </div>
         ))}
       </div>
     </section>

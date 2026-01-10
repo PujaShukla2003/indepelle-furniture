@@ -1,77 +1,34 @@
-"use client";
-
 import Link from "next/link";
+import Image from "next/image";
 
-const livingCategories = [
-  {
-    title: "Organisers",
-    slug: "organisers",
-    image:
-      "https://img-s-msn-com.akamaized.net/tenant/amp/entityid/AA1STwre.img?w=768&h=768&m=6",
-  },
-  {
-    title: "Trays",
-    slug: "trays",
-    image:
-      "https://images.unsplash.com/photo-1603199506016-b9a594b593c0?q=80&w=1200",
-  },
-  {
-    title: "Coasters",
-    slug: "coasters",
-    image:
-      "https://www.unknownbrewing.com/wp-content/uploads/2024/05/DIY-Wooden-Coasters.jpeg",
-  },
-  {
-    title: "Tissue Boxes",
-    slug: "tissue-boxes",
-    image:
-      "https://m.media-amazon.com/images/I/81lmMKSCoqL._AC_SL1500_.jpg",
-  },
-  {
-    title: "Storage",
-    slug: "storage",
-    image:
-      "https://images.unsplash.com/photo-1615874959474-d609969a20ed?q=80&w=1200",
-  },
-  {
-    title: "Baskets",
-    slug: "baskets",
-    image:
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1200",
-  },
+const categories = [
+  { name: "Carpets", slug: "carpets", image: "/images/decor/carpets/photo-1570569441276-ff551cba7331.avif" },
+  { name: "Rugs", slug: "rugs", image: "/images/decor/premium_photo-1739350940126-a3fcee922e32.avif" },
 ];
 
 export default function LivingPage() {
   return (
-    <section className="max-w-7xl mx-auto px-6 py-14">
-      {/* HEADER */}
-      <div className="mb-12">
-        <h1 className="text-4xl font-serif mb-4">Home & Living</h1>
-        <p className="text-gray-600 max-w-2xl">
-          Effortless organization for your everyday living needs.
-        </p>
-      </div>
+    <section className="max-w-7xl mx-auto px-6 py-16">
+      <h1 className="text-4xl font-serif mb-12">
+        Living Decor
+      </h1>
 
-      {/* GRID */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-        {livingCategories.map((item) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+        {categories.map((cat) => (
           <Link
-            key={item.slug}
-            href={`/living/${item.slug}`}
-            className="group relative overflow-hidden rounded-2xl"
+            key={cat.slug}
+            href={`/living/${cat.slug}`}
+            className="group rounded-2xl overflow-hidden border hover:shadow-xl transition"
           >
-            {/* IMAGE */}
-            <img
-              src={item.image}
-              alt={item.title}
-              className="h-80 w-full object-cover transition duration-700 group-hover:scale-105"
+            <Image
+              src={cat.image}
+              alt={cat.name}
+              width={800}
+              height={500}
+              className="w-full h-72 object-cover group-hover:scale-105 transition"
             />
-
-            {/* OVERLAY */}
-            <div className="absolute inset-0 bg-black/30 flex items-end">
-              <h2 className="text-white text-3xl font-serif p-6">
-                {item.title}
-              </h2>
+            <div className="p-6 text-center text-2xl font-medium">
+              {cat.name}
             </div>
           </Link>
         ))}
