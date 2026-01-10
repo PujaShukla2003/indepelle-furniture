@@ -44,9 +44,7 @@ const menu = [
   {
     title: "Home Office",
     slug: "/home-office",
-    items: [
-      { name: "Office Furniture", link: "/interiors/office" },
-    ],
+    items: [{ name: "Office Furniture", link: "/interiors/office" }],
   },
 ];
 
@@ -65,70 +63,75 @@ export default function Navbar() {
           <Image
             src="/logo.webp"
             alt="Indepelle"
-            width={260}
-            height={80}
+            width={240}
+            height={70}
             priority
           />
         </Link>
       </div>
 
-      {/* ================= NAVBAR ================= */}
-      <nav className="sticky top-0 z-50 bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 h-[64px] flex items-center justify-between">
+      {/* ===== NAVBAR ===== */}
+      <nav className="sticky top-0 z-50 bg-white border-b">
+        <div className="max-w-7xl mx-auto px-6 h-[64px] flex items-center">
 
-          {/* DESKTOP MENU */}
-          <ul className="hidden lg:flex gap-8 text-[15px] font-bold text-black h-full items-center">
-            <li><Link href="/">Home</Link></li>
-            <li><Link href="/interiors">Interiors</Link></li>
+          {/* CENTER MENU */}
+          <ul className="hidden lg:flex mx-auto items-center gap-8 text-[15px] font-semibold">
+            <NavLink name="Home" link="/" />
 
             {menu.map((m) => (
               <li
                 key={m.title}
-                className="relative h-full flex items-center"
+                className="relative"
                 onMouseEnter={() => setOpenDesktop(m.title)}
                 onMouseLeave={() => setOpenDesktop(null)}
               >
-                <Link href={m.slug}>{m.title}</Link>
+                <Link href={m.slug} className="flex items-center gap-1 py-2">
+                  {m.title}
+                  <span className="text-xs">▾</span>
+                </Link>
 
-    {/* DROPDOWN */}
-    <div
-      className={`absolute left-0 top-full mt-2 w-64 rounded-xl border bg-white shadow-xl
-      transition-all duration-200
-      ${
-        openDesktop === m.title
-          ? "opacity-100 visible translate-y-0"
-          : "opacity-0 invisible translate-y-2 pointer-events-none"
-      }`}
-    >
-      <Link
-        href={m.slug}
-        className="block px-5 py-3 font-semibold hover:bg-gray-50"
-      >
-        View All
-      </Link>
+                {/* DROPDOWN */}
+                <div
+                  className={`absolute left-1/2 -translate-x-1/2 top-full mt-3 w-64
+                  rounded-xl border bg-white shadow-xl transition-all
+                  ${
+                    openDesktop === m.title
+                      ? "opacity-100 visible translate-y-0"
+                      : "opacity-0 invisible translate-y-2 pointer-events-none"
+                  }`}
+                >
+                  <Link
+                    href={m.slug}
+                    className="block px-5 py-3 font-semibold hover:bg-gray-50"
+                  >
+                    View All
+                  </Link>
 
-      {m.items.map((item) => (
-        <Link
-          key={item.name}
-          href={item.link}
-          className="block px-5 py-2 text-sm hover:bg-gray-50"
-        >
-          {item.name}
-        </Link>
-      ))}
-    </div>
-  </li>
-))}
+                  {m.items.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.link}
+                      className="block px-5 py-2 text-sm hover:bg-gray-50"
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                </div>
+              </li>
+            ))}
 
-            <li><Link href="/collaborations">Collaborations</Link></li>
+            <NavLink name="About" link="/about" />
+            <NavLink name="Contact" link="/contact" />
           </ul>
 
-          {/* AUTH */}
-          <div className="hidden lg:flex gap-6 items-center text-sm font-bold">
+          {/* RIGHT AUTH */}
+          <div className="hidden lg:flex gap-6 ml-auto text-sm font-semibold items-center">
             <Link href="/login">Login</Link>
             <Link
               href="/signup"
-              className="border border-black px-6 py-2 rounded-full hover:bg-black hover:text-white transition"
+              className="px-6 py-2 rounded-full border border-black
+                         hover:bg-black hover:text-white
+                         transition-all duration-200"
             >
               Sign Up
             </Link>
@@ -136,14 +139,14 @@ export default function Navbar() {
 
           {/* MOBILE BUTTON */}
           <button
-            className="lg:hidden text-2xl"
+            className="lg:hidden ml-auto text-2xl"
             onClick={() => setMobileOpen(!mobileOpen)}
           >
             ☰
           </button>
         </div>
 
-        {/* MOBILE MENU */}
+        {/* ===== MOBILE MENU ===== */}
         {mobileOpen && (
           <div className="lg:hidden bg-white border-t px-6 py-6 space-y-4 font-semibold">
 
