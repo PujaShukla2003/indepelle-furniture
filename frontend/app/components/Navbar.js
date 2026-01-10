@@ -55,11 +55,16 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMobile, setOpenMobile] = useState(null);
 
+  const closeMobileMenu = () => {
+    setMobileOpen(false);
+    setOpenMobile(null);
+  };
+
   return (
     <>
       {/* ===== LOGO BAR ===== */}
       <div className="bg-black flex justify-center py-4">
-        <Link href="/">
+        <Link href="/" onClick={closeMobileMenu}>
           <Image
             src="/logo.webp"
             alt="Indepelle"
@@ -74,7 +79,7 @@ export default function Navbar() {
       <nav className="sticky top-0 z-50 bg-white border-b">
         <div className="max-w-7xl mx-auto px-6 h-[64px] flex items-center">
 
-          {/* CENTER MENU */}
+          {/* ===== DESKTOP MENU (CENTERED) ===== */}
           <ul className="hidden lg:flex mx-auto items-center gap-8 text-[15px] font-semibold">
             <NavLink name="Home" link="/" />
 
@@ -85,7 +90,10 @@ export default function Navbar() {
                 onMouseEnter={() => setOpenDesktop(m.title)}
                 onMouseLeave={() => setOpenDesktop(null)}
               >
-                <Link href={m.slug} className="flex items-center gap-1 py-2">
+                <Link
+                  href={m.slug}
+                  className="flex items-center gap-1 py-2"
+                >
                   {m.title}
                   <span className="text-xs">▾</span>
                 </Link>
@@ -124,23 +132,23 @@ export default function Navbar() {
             <NavLink name="Contact" link="/contact" />
           </ul>
 
-          {/* RIGHT AUTH */}
+          {/* ===== DESKTOP AUTH ===== */}
           <div className="hidden lg:flex gap-6 ml-auto text-sm font-semibold items-center">
             <Link href="/login">Login</Link>
             <Link
               href="/signup"
               className="px-6 py-2 rounded-full border border-black
-                         hover:bg-black hover:text-white
-                         transition-all duration-200"
+                         hover:bg-black hover:text-white transition-all"
             >
               Sign Up
             </Link>
           </div>
 
-          {/* MOBILE BUTTON */}
+          {/* ===== MOBILE BUTTON ===== */}
           <button
             className="lg:hidden ml-auto text-2xl"
             onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Open menu"
           >
             ☰
           </button>
@@ -150,8 +158,8 @@ export default function Navbar() {
         {mobileOpen && (
           <div className="lg:hidden bg-white border-t px-6 py-6 space-y-4 font-semibold">
 
-            <MobileLink name="Home" link="/" />
-            <MobileLink name="About" link="/about" />
+            <MobileLink name="Home" link="/" onClick={closeMobileMenu} />
+            <MobileLink name="About" link="/about" onClick={closeMobileMenu} />
 
             {menu.map((m) => (
               <div key={m.title}>
@@ -167,9 +175,16 @@ export default function Navbar() {
 
                 {openMobile === m.title && (
                   <div className="pl-4 space-y-2 text-sm">
-                    <Link href={m.slug}>View All</Link>
+                    <Link href={m.slug} onClick={closeMobileMenu}>
+                      View All
+                    </Link>
+
                     {m.items.map((item) => (
-                      <Link key={item.name} href={item.link}>
+                      <Link
+                        key={item.name}
+                        href={item.link}
+                        onClick={closeMobileMenu}
+                      >
                         {item.name}
                       </Link>
                     ))}
@@ -178,11 +193,17 @@ export default function Navbar() {
               </div>
             ))}
 
-            <MobileLink name="Contact" link="/contact" />
+            <MobileLink name="Contact" link="/contact" onClick={closeMobileMenu} />
 
             <div className="pt-4 flex gap-4">
-              <Link href="/login">Login</Link>
-              <Link href="/signup" className="border px-4 py-2 rounded-full">
+              <Link href="/login" onClick={closeMobileMenu}>
+                Login
+              </Link>
+              <Link
+                href="/signup"
+                onClick={closeMobileMenu}
+                className="border px-4 py-2 rounded-full"
+              >
                 Sign Up
               </Link>
             </div>
@@ -193,7 +214,7 @@ export default function Navbar() {
   );
 }
 
-/* ===== HELPERS ===== */
+/* ================= HELPERS ================= */
 
 function NavLink({ name, link }) {
   return (
@@ -204,9 +225,9 @@ function NavLink({ name, link }) {
   );
 }
 
-function MobileLink({ name, link }) {
+function MobileLink({ name, link, onClick }) {
   return (
-    <Link href={link} className="block py-2">
+    <Link href={link} onClick={onClick} className="block py-2">
       {name}
     </Link>
   );
