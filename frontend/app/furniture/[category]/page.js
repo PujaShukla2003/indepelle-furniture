@@ -1,55 +1,78 @@
-import fs from "fs";
-import path from "path";
+"use client";
+import React, { use } from "react";
+import { useCart } from "../../../context/CartContext"; // Path dhyan se check karein
+import { useRouter } from "next/navigation";
 
 export default function FurnitureCategoryPage({ params }) {
-  const { category } = params;
+  const { category } = use(params);
+  const { addToCart } = useCart();
+  const router = useRouter();
 
-  const folderPath = path.join(
-    process.cwd(),
-    "public/images/furniture",
-    category
-  );
-
-  if (!fs.existsSync(folderPath)) {
-    return (
-      <div className="max-w-7xl mx-auto px-6 py-20">
-        <h1 className="text-3xl font-semibold">
-          Furniture category not found
-        </h1>
-      </div>
-    );
-  }
-
-  const images = fs
-    .readdirSync(folderPath)
-    .filter((file) =>
-      /\.(jpg|jpeg|png|webp|avif)$/i.test(file)
-    );
+  // Ye data structure aapke image paths ke hisaab se hai
+  const items = [
+    { id: `${category}-1`, title: `Premium ${category}`, price: 15999, rating: "4.4 (64 reviews)", img: "photo-1.avif" },
+    { id: `${category}-2`, title: `Luxury ${category}`, price: 24999, rating: "4.5 (92 reviews)", img: "photo-2.avif" },
+    { id: `${category}-3`, title: `Modern ${category}`, price: 32999, rating: "4.6 (118 reviews)", img: "photo-3.avif" },
+  ];
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-16">
-      <h1 className="text-4xl font-serif capitalize mb-10">
-        {category.replace(/-/g, " ")}
-      </h1>
+      <h1 className="text-4xl font-serif capitalize mb-10">{category.replace('-', ' ')} Collection</h1>
 
-      {images.length === 0 ? (
-        <p className="text-gray-500">No images found</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-          {images.map((img, index) => (
-            <div
-              key={index}
-              className="rounded-2xl overflow-hidden border hover:shadow-xl transition"
-            >
-              <img
-                src={`/images/furniture/${category}/${img}`}
-                alt={category}
-                className="w-full h-64 object-cover hover:scale-105 transition"
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+        {items.map((item) => (
+          <div key={item.id} className="rounded-2xl overflow-hidden border bg-white shadow-sm hover:shadow-md transition">
+            {/* Image Section */}
+            <div className="h-72 overflow-hidden bg-gray-100">
+              <img 
+                src={`/images/furnitures/${category}/${item.img}`} 
+                alt={item.title}
+                className="w-full h-full object-cover"
+                onError={(e) => e.target.src = 'https://via.placeholder.com/400x300?text=No+Image'}
               />
             </div>
-          ))}
-        </div>
-      )}
+
+            {/* Details Section */}
+            <div className="p-5">
+              <h3 className="font-bold text-lg capitalize">{item.title}</h3>
+              <p className="text-yellow-500 text-sm">★ {item.rating}</p>
+              <p className="text-xl font-bold mt-1 text-black">₹{item.price.toLocaleString()}</p>
+              
+              {/* ACTION BUTTONS JO HAR PAGE PAR DIKHENGE */}
+              <div className="grid grid-cols-2 gap-3 mt-4">
+                <button 
+                  onClick={() => {
+                    addToCart({ 
+                        id: item.id, 
+                        name: item.title, 
+                        price: item.price, 
+                        image: `/images/furnitures/${category}/${item.img}` 
+                    });
+                    alert(`${item.title} Cart mein add ho gaya!`);
+                  }}
+                  className="py-2 border border-black rounded-lg text-[10px] font-bold uppercase hover:bg-gray-100 transition"
+                >
+                  Add to Cart
+                </button>
+                <button 
+                  onClick={() => {
+                    addToCart({ 
+                        id: item.id, 
+                        name: item.title, 
+                        price: item.price, 
+                        image: `/images/furnitures/${category}/${item.img}` 
+                    });
+                    router.push("/cart");
+                  }}
+                  className="py-2 bg-black text-white rounded-lg text-[10px] font-bold uppercase hover:bg-gray-800 transition"
+                >
+                  Buy Now
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }

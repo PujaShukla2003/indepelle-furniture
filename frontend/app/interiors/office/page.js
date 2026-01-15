@@ -1,11 +1,10 @@
 import fs from "fs";
 import path from "path";
-import Image from "next/image";
+import ProductCard from "../../components/ProductCard"; // Path ensure karein
 
 export const metadata = {
   title: "Office Interiors | Indepelle",
-  description:
-    "Premium office interior designs for modern and corporate workspaces by Indepelle",
+  description: "Premium office interior designs for modern and corporate workspaces by Indepelle",
 };
 
 /* 🔹 Price / rating generator */
@@ -22,89 +21,45 @@ function getOfficeMeta(index) {
 }
 
 export default function OfficePage() {
-  const dirPath = path.join(
-    process.cwd(),
-    "public/images/interiors/office"
-  );
+  const dirPath = path.join(process.cwd(), "public/images/interiors/office");
 
-  // ✅ Safety check
-  if (!fs.existsSync(dirPath)) {
-    return (
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <h1 className="text-3xl font-semibold">
-          No Office Designs Found
-        </h1>
-      </section>
-    );
+  // ✅ Safety check for folder
+  let images = [];
+  if (fs.existsSync(dirPath)) {
+    images = fs
+      .readdirSync(dirPath)
+      .filter((img) => /\.(jpg|jpeg|png|webp|avif)$/i.test(img));
   }
-
-  const images = fs
-    .readdirSync(dirPath)
-    .filter((img) =>
-      /\.(jpg|jpeg|png|webp|avif)$/i.test(img)
-    );
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-16">
-      <h1 className="text-4xl font-serif mb-12">
-        Office Interior Designs
-      </h1>
+      <h1 className="text-4xl font-serif mb-12">Office Interior Designs</h1>
 
       {images.length === 0 ? (
-        <p className="text-gray-500">
-          No office images available
-        </p>
+        <div className="text-center py-20 border-2 border-dashed rounded-2xl">
+          <p className="text-gray-500 text-xl">
+            No office designs found in /public/images/interiors/office
+          </p>
+        </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
           {images.map((img, i) => {
             const meta = getOfficeMeta(i);
 
+            // 🔹 Data structure for the ProductCard and Cart sync
+            const product = {
+              id: `office-design-${i}`,
+              title: "Corporate Office Interior",
+              price: meta.price,
+              image: `/images/interiors/office/${img}`,
+            };
+
             return (
-              <div
-                key={i}
-                className="group rounded-2xl overflow-hidden border hover:shadow-xl transition"
-              >
-                {/* IMAGE */}
-                <div className="relative overflow-hidden bg-gray-100">
-                  <Image
-                    src={`/images/interiors/office/${img}`}
-                    alt="Office Interior"
-                    width={600}
-                    height={400}
-                    className="w-full h-72 object-cover transition duration-500 group-hover:scale-105"
-                    priority={i < 2}
-                  />
-
-                  {/* BEST SELLER */}
-                  {meta.rating >= 4.8 && (
-                    <span className="absolute top-3 left-3 bg-green-600 text-white text-xs px-3 py-1 rounded">
-                      Best Seller
-                    </span>
-                  )}
-                </div>
-
-                {/* DETAILS */}
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold">
-                    Corporate Office Interior
-                  </h3>
-
-                  {/* RATING */}
-                  <div className="flex items-center gap-2 mt-1">
-                    <span className="text-yellow-500 text-sm">
-                      ⭐ {meta.rating}
-                    </span>
-                    <span className="text-gray-500 text-sm">
-                      ({meta.reviews} reviews)
-                    </span>
-                  </div>
-
-                  {/* PRICE */}
-                  <p className="text-lg font-bold mt-2">
-                    ₹{meta.price.toLocaleString()}
-                  </p>
-                </div>
-              </div>
+              <ProductCard 
+                key={i} 
+                product={product} 
+                meta={meta} 
+              />
             );
           })}
         </div>

@@ -1,7 +1,9 @@
 import Hero from "./components/Hero";
 import CategoryGrid from "./components/CategoryGrid";
 import EditorialGrid from "./components/EditorialGrid";
-import InteriorGallery from "./components/InteriorGallery";
+import InteriorGallery from "./components/FurnitureGallery";
+// ✅ ProductCard ko import karein
+import ProductCard from "./components/ProductCard"; 
 
 import Link from "next/link";
 import Image from "next/image";
@@ -10,113 +12,102 @@ import path from "path";
 
 export const metadata = {
   title: "Indepelle Furniture | Buy Furniture Online",
-  description:
-    "Buy premium furniture like sofa, bed, dining table online at best price.",
+  description: "Buy premium furniture like sofa, bed, dining table online at best price.",
 };
 
-/* ================= HELPER FUNCTION ================= */
-function getImages(folder, limit = 3) {
-  const dirPath = path.join(process.cwd(), "public", folder);
+/* ================= HELPER FUNCTIONS ================= */
 
-  if (!fs.existsSync(dirPath)) return [];
+function getAllImagesFromFolder(parentFolder) {
+  const fullPath = path.join(process.cwd(), "public", parentFolder);
+  let allImages = [];
+  if (!fs.existsSync(fullPath)) return [];
+  const items = fs.readdirSync(fullPath);
 
-  return fs
-    .readdirSync(dirPath)
-    .filter((img) =>
-      /\.(jpg|jpeg|png|webp|avif)$/i.test(img)
-    )
-    .slice(0, limit)
-    .map((img) => `/${folder}/${img}`);
+  items.forEach((item) => {
+    const itemPath = path.join(fullPath, item);
+    if (fs.statSync(itemPath).isDirectory()) {
+      const subImages = fs.readdirSync(itemPath)
+        .filter((img) => /\.(jpg|jpeg|png|webp|avif)$/i.test(img))
+        .map((img) => ({
+          path: `/${parentFolder}/${item}/${img}`,
+          category: item
+        }));
+      allImages = [...allImages, ...subImages];
+    }
+  });
+  return allImages;
+}
+
+// Price aur Rating generate karne ke liye
+function getProductMeta(index) {
+  const prices = [12999, 24500, 8999, 45000, 15700];
+  return {
+    price: prices[index % prices.length],
+    rating: (4 + Math.random()).toFixed(1),
+    reviews: Math.floor(Math.random() * 100) + 10
+  };
 }
 
 export default function Home() {
-  /* ===== IMAGES AUTO LOAD FROM FOLDERS ===== */
-  const interiors = getImages("images/interiors/bedroom");
-  const furniture = getImages("images/furnitures/sofas");
-  const living = getImages("images/decor/carpets");
-  const homeOffice = getImages("images/home-office");
+  const interiors = getAllImagesFromFolder("images/interiors");
+  const furniture = getAllImagesFromFolder("images/furnitures");
+  const living = getAllImagesFromFolder("images/decor");
 
   return (
-    <main className="space-y-24">
-
-      {/* ================= HERO SECTION ================= */}
+    <main className="space-y-24 bg-gray-50/50">
       <Hero />
-
-      {/* ================= CATEGORY GRID ================= */}
       <CategoryGrid />
 
-      {/* ================= INTERIOR GALLERY (OLD – KEEP) ================= */}
-      <InteriorGallery
-        title="Our Interior Designs"
-        limit={6}
-      />
+      <Section title="Interior Designs" link="/interiors" items={interiors} />
+      <Section title="Premium Furniture" link="/furniture" items={furniture} />
+      <Section title="Living & Decor" link="/living" items={living} />
 
-      {/* ================= NEW : INTERIORS PREVIEW ================= */}
-      <Section
-        title="Interior Designs"
-        link="/interiors"
-        images={interiors}
-      />
-
-      {/* ================= NEW : FURNITURE PREVIEW ================= */}
-      <Section
-        title="Furniture"
-        link="/furniture"
-        images={furniture}
-      />
-
-      {/* ================= NEW : LIVING DECOR PREVIEW ================= */}
-      <Section
-        title="Living Decor"
-        link="/living"
-        images={living}
-      />
-
-      {/* ================= NEW : HOME OFFICE PREVIEW ================= */}
-      <Section
-        title="Home Office"
-        link="/home-office"
-        images={homeOffice}
-      />
-
-      {/* ================= EDITORIAL / BLOG ================= */}
       <EditorialGrid />
-
     </main>
   );
 }
 
-/* ================= REUSABLE SECTION COMPONENT ================= */
-function Section({ title, link, images }) {
-  if (images.length === 0) return null;
+/* ================= UPDATED SECTION COMPONENT ================= */
+function Section({ title, link, items }) {
+  if (items.length === 0) return null;
 
   return (
     <section className="max-w-7xl mx-auto px-6">
-      <div className="flex justify-between items-center mb-8">
-        <h2 className="text-4xl font-serif">{title}</h2>
-        <Link
-          href={link}
-          className="text-sm underline hover:text-gray-600"
-        >
-          View All
+      <div className="flex justify-between items-end mb-10 border-b pb-6">
+        <div>
+          <h2 className="text-4xl font-serif mb-2">{title}</h2>
+          <p className="text-gray-500">Explore our exclusive {title.toLowerCase()} collection</p>
+        </div>
+        <Link href={link} className="text-black font-medium underline underline-offset-4 hover:text-gray-600">
+          View All {items.length} Items
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-        {images.map((img, i) => (
-          <div
-            key={i}
-            className="rounded-2xl overflow-hidden border hover:shadow-xl transition"
-          >
-            <Image
-              src={img}
-              alt={title}
-              width={600}
-              height={400}
-              className="w-full h-72 object-cover hover:scale-105 transition duration-300"
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {items.map((item, i) => {
+          const meta = getProductMeta(i);
+          
+          // ProductCard ke liye data structure taiyar karein
+          const productData = {
+            id: `home-${title}-${i}`,
+            title: `Premium ${item.category || "Item"}`,
+            price: meta.price,
+            image: item.path, // String format for cart compatibility
+          };
+
+          const productMeta = {
+            rating: meta.rating,
+            reviews: meta.reviews
+          };
+
+          return (
+            <ProductCard 
+              key={i} 
+              product={productData} 
+              meta={productMeta} 
             />
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

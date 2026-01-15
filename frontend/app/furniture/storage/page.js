@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import Image from "next/image";
+import ProductCard from "../../components/ProductCard"; // Path sahi se check kar lein
 
 export const metadata = {
   title: "Storage Furniture | Indepelle Furniture",
@@ -22,92 +22,48 @@ function getProductMeta(index) {
 }
 
 export default function StoragePage() {
-  const dirPath = path.join(
-    process.cwd(),
-    "public/images/furnitures/storage"
-  );
+  const dirPath = path.join(process.cwd(), "public/images/furnitures/storage");
 
-  // ✅ SAFETY CHECK
-  if (!fs.existsSync(dirPath)) {
-    return (
-      <section className="max-w-7xl mx-auto px-6 py-20">
-        <h1 className="text-3xl font-semibold">
-          No Storage Products Found
-        </h1>
-      </section>
+  // ✅ Automatically fetch all images from the folder
+  let images = [];
+  if (fs.existsSync(dirPath)) {
+    images = fs.readdirSync(dirPath).filter((img) =>
+      /\.(jpg|jpeg|png|webp|avif)$/i.test(img)
     );
   }
 
-  const images = fs
-    .readdirSync(dirPath)
-    .filter((img) =>
-      /\.(jpg|jpeg|png|webp|avif)$/i.test(img)
-    );
-
   return (
     <section className="max-w-7xl mx-auto px-6 py-16">
-      <h1 className="text-4xl font-serif mb-12">
-        Storage Furniture
-      </h1>
+      <h1 className="text-4xl font-serif mb-12">Storage Furniture</h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-        {images.map((img, i) => {
-          const meta = getProductMeta(i);
+      {images.length === 0 ? (
+        <div className="text-center py-20">
+          <p className="text-gray-500 text-xl">
+            No storage products found in the gallery.
+          </p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
+          {images.map((img, i) => {
+            const meta = getProductMeta(i);
 
-          return (
-            <div
-              key={i}
-              className="group border rounded-2xl overflow-hidden hover:shadow-xl transition"
-            >
-              {/* IMAGE */}
-              <div className="relative overflow-hidden bg-gray-100">
-                <Image
-                  src={`/images/furnitures/storage/${img}`}
-                  alt="Premium Storage Furniture"
-                  width={600}
-                  height={400}
-                  className="w-full h-72 object-cover transition duration-500 group-hover:scale-105"
-                />
+            // 🔹 Product object structure jo CartContext ke liye ready hai
+            const product = {
+              id: `storage-${i}`,
+              title: "Premium Storage Unit",
+              price: meta.price,
+              image: `/images/furnitures/storage/${img}`,
+            };
 
-                {/* BEST SELLER */}
-                {meta.rating >= 4.7 && (
-                  <span className="absolute top-3 left-3 bg-green-600 text-white text-xs px-3 py-1 rounded">
-                    Best Seller
-                  </span>
-                )}
-              </div>
-
-              {/* DETAILS */}
-              <div className="p-4">
-                <h3 className="text-lg font-semibold">
-                  Premium Storage Unit
-                </h3>
-
-                {/* RATING */}
-                <div className="flex items-center gap-2 mt-1">
-                  <span className="text-yellow-500 text-sm">
-                    ⭐ {meta.rating}
-                  </span>
-                  <span className="text-gray-500 text-sm">
-                    ({meta.reviews} reviews)
-                  </span>
-                </div>
-
-                {/* PRICE */}
-                <p className="text-lg font-bold mt-2">
-                  ₹{meta.price.toLocaleString()}
-                </p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* EMPTY STATE */}
-      {images.length === 0 && (
-        <p className="text-center text-gray-500 mt-16">
-          No storage furniture available
-        </p>
+            return (
+              <ProductCard 
+                key={i} 
+                product={product} 
+                meta={meta} 
+              />
+            );
+          })}
+        </div>
       )}
     </section>
   );

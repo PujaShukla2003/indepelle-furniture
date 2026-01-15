@@ -14,11 +14,11 @@ export const heroSlides = [
     link: "/interiors/bedroom",
   },
   {
-    title: "Modern Kitchens",
+    title: "Modern Sofa Set",
     description:
-      "Functional and stylish kitchens built for contemporary lifestyles.",
-    image: "/images/interiors/kitchen/kitchen-1.webp",
-    link: "/interiors/kitchen",
+      "Functional and stylish Living room built for contemporary lifestyles.",
+    image: "/images/furnitures/sofas/premium_photo-1661954429387-c1517e1a67c2.avif",
+    link: "/interiors/sofa-set",
   },
   {
     title: "Office & Workspace",
