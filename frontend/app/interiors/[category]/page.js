@@ -1,14 +1,15 @@
 "use client";
-import React, { use } from "react";
-// Path verified
+
+import React from "react";
 import { useRouter } from "next/navigation";
-// ✅ Path fix: Relative path use karein agar @ alias kaam nahi kar raha
-import ProductCard from "../../components/ProductCard"; 
+import { useCart } from "../../context/CartContext";
+import ProductCard from "../../components/ProductCard";
 
 export default function InteriorCategoryPage({ params }) {
-  const { category } = use(params);
+  const { category } = params;
   const { addToCart } = useCart();
   const router = useRouter();
+
 
   const items = [
     { 

@@ -3,6 +3,7 @@ import path from "path";
 import Image from "next/image";
 import ProductCard from "../../components/ProductCard"; // @ alias use karein ya ../../../components/ProductCard
 
+
 // 🔹 Price / rating generator specific to Decor
 function getDecorMeta(index) {
   const prices = [1500, 2500, 4500, 7500, 12000];
