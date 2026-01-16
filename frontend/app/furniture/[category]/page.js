@@ -1,12 +1,14 @@
 "use client";
-import React, { use } from "react";
-import { useCart } from "../../../context/CartContext"; // Path dhyan se check karein
+
+import React from "react";
+import { useCart } from "../../../context/CartContext";
 import { useRouter } from "next/navigation";
 
 export default function FurnitureCategoryPage({ params }) {
-  const { category } = use(params);
+  const { category } = params;
   const { addToCart } = useCart();
   const router = useRouter();
+
 
   // Ye data structure aapke image paths ke hisaab se hai
   const items = [
