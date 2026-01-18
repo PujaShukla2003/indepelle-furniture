@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 
 /* ================= MENU DATA ================= */
@@ -51,30 +51,40 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMobile, setOpenMobile] = useState(null);
 
-  /* CART DATA */
   const { cart } = useCart();
-  const totalItems = cart.reduce((acc, item) => acc + (item.qty || 0), 0);
+  const totalItems = cart.reduce((a, i) => a + (i.qty || 0), 0);
 
   const closeMobileMenu = () => {
     setMobileOpen(false);
     setOpenMobile(null);
   };
 
+  /* BODY SCROLL LOCK */
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+  }, [mobileOpen]);
+
   return (
     <>
       {/* LOGO BAR */}
-      <div className="bg-black flex justify-center py-4">
+      <div className="bg-black flex justify-center py-4 relative z-50">
         <Link href="/" onClick={closeMobileMenu}>
-          <Image src="/logo.webp" alt="Indepelle" width={240} height={70} priority />
+          <Image
+            src="/logo.webp"
+            alt="Indepelle"
+            width={240}
+            height={70}
+            priority
+          />
         </Link>
       </div>
 
       {/* NAVBAR */}
-      <nav className="sticky top-0 z-50 bg-white border-b">
+      <nav className="sticky top-0 z-40 bg-white border-b">
         <div className="max-w-7xl mx-auto px-6 h-[64px] flex items-center justify-between">
 
           {/* DESKTOP MENU */}
-          <ul className="hidden lg:flex items-center gap-8 text-[15px] font-semibold flex-1 justify-center">
+          <ul className="hidden lg:flex items-center gap-8 text-sm font-semibold flex-1 justify-center">
             <NavLink name="Home" link="/" />
 
             {menu.map((m) => (
@@ -88,12 +98,14 @@ export default function Navbar() {
                   href={m.slug}
                   className="flex items-center gap-1 py-2 uppercase tracking-wide"
                 >
-                  {m.title} <span className="text-[10px]">▼</span>
+                  {m.title}
+                  <span className="text-[10px]">▼</span>
                 </Link>
 
                 {/* DROPDOWN */}
                 <div
-                  className={`absolute left-1/2 -translate-x-1/2 top-full w-64 rounded-b-xl border bg-white shadow-xl transition-all duration-300
+                  className={`absolute left-1/2 -translate-x-1/2 top-full w-64
+                  rounded-b-xl border bg-white shadow-xl transition-all duration-300
                   ${
                     openDesktop === m.title
                       ? "opacity-100 visible translate-y-0"
@@ -111,7 +123,7 @@ export default function Navbar() {
                     <Link
                       key={item.name}
                       href={item.link}
-                      className="block px-5 py-2.5 text-sm hover:bg-gray-50 transition-colors"
+                      className="block px-5 py-2.5 text-sm hover:bg-gray-50"
                     >
                       {item.name}
                     </Link>
@@ -125,18 +137,20 @@ export default function Navbar() {
           </ul>
 
           {/* RIGHT SIDE */}
-          <div className="flex gap-6 text-sm font-semibold items-center">
-            <div className="hidden lg:flex items-center gap-5">
-              <Link href="/login">Login</Link>
+          <div className="flex items-center gap-4 font-semibold">
+            <div className="hidden lg:flex items-center gap-4">
+              <Link href="/login" className="hover:text-gray-600">
+                Login
+              </Link>
               <Link
                 href="/signup"
-                className="px-5 py-2 rounded-full border border-black hover:bg-black hover:text-white transition-all"
+                className="px-5 py-2 rounded-full bg-black text-white hover:bg-gray-800 transition"
               >
                 Sign Up
               </Link>
             </div>
 
-            {/* CART ICON */}
+            {/* CART */}
             <Link href="/cart" className="relative p-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -161,19 +175,29 @@ export default function Navbar() {
               )}
             </Link>
 
-            {/* MOBILE BUTTON */}
+            {/* MOBILE TOGGLE */}
             <button
               className="lg:hidden text-2xl"
-              onClick={() => setMobileOpen(!mobileOpen)}
+              onClick={() => setMobileOpen(true)}
             >
               ☰
             </button>
           </div>
         </div>
+      </nav>
 
-        {/* MOBILE MENU */}
-        {mobileOpen && (
-          <div className="lg:hidden bg-white border-t px-6 py-6 space-y-4 font-semibold shadow-2xl absolute w-full left-0">
+      {/* MOBILE FULLSCREEN MENU */}
+      {mobileOpen && (
+        <div className="fixed inset-0 z-[9999] bg-white overflow-y-auto">
+          <div className="px-6 py-6 space-y-4 font-semibold">
+
+            <button
+              className="text-xl mb-4"
+              onClick={closeMobileMenu}
+            >
+              ✕ Close
+            </button>
+
             <MobileLink name="Home" link="/" onClick={closeMobileMenu} />
             <MobileLink name="About" link="/about" onClick={closeMobileMenu} />
 
@@ -213,22 +237,27 @@ export default function Navbar() {
                 )}
               </div>
             ))}
-
-            <div className="pt-4 flex flex-col gap-4">
-              <Link href="/login" onClick={closeMobileMenu}>
-                Login
-              </Link>
-              <Link
-                href="/signup"
-                onClick={closeMobileMenu}
-                className="bg-black text-white py-3 rounded-xl text-center"
-              >
-                Sign Up
-              </Link>
-            </div>
           </div>
-        )}
-      </nav>
+
+          {/* MOBILE LOGIN / SIGNUP FIXED */}
+          <div className="fixed bottom-0 left-0 right-0 bg-white border-t px-6 py-4 flex gap-4">
+            <Link
+              href="/login"
+              onClick={closeMobileMenu}
+              className="flex-1 text-center py-3 border border-black rounded-xl"
+            >
+              Login
+            </Link>
+            <Link
+              href="/signup"
+              onClick={closeMobileMenu}
+              className="flex-1 text-center py-3 bg-black text-white rounded-xl"
+            >
+              Sign Up
+            </Link>
+          </div>
+        </div>
+      )}
     </>
   );
 }
@@ -238,17 +267,21 @@ export default function Navbar() {
 function NavLink({ name, link }) {
   return (
     <li className="relative group">
-      <Link href={link} className="py-2 inline-block uppercase tracking-wider">
+      <Link href={link} className="py-2 uppercase tracking-wider">
         {name}
       </Link>
-      <span className="absolute left-0 bottom-1 w-0 h-[2px] bg-black transition-all duration-300 group-hover:w-full" />
+      <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-black transition-all group-hover:w-full" />
     </li>
   );
 }
 
 function MobileLink({ name, link, onClick }) {
   return (
-    <Link href={link} onClick={onClick} className="block py-3 border-b text-lg">
+    <Link
+      href={link}
+      onClick={onClick}
+      className="block py-3 border-b text-lg"
+    >
       {name}
     </Link>
   );

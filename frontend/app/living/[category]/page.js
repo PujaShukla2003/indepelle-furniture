@@ -1,7 +1,8 @@
 import fs from "fs";
 import path from "path";
 import Image from "next/image";
-import ProductCard from "../../components/ProductCard"; // @ alias use karein ya ../../../components/ProductCard
+import ProductCard from "@/app/components/ProductCard";
+// @ alias use karein ya ../../../components/ProductCard
 
 
 // 🔹 Price / rating generator specific to Decor
