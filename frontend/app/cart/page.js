@@ -36,13 +36,13 @@ export default function CartPage() {
           {cart.map((item) => (
             <div
               key={item.id}
-              className="flex gap-4 border rounded-2xl p-4 items-center bg-white"
+              className="flex gap-4 border rounded-2xl p-4 items-center bg-white shadow-sm"
             >
-              {/* ✅ IMAGE FIX: item.images[0] ki jagah item.image use karein */}
+              {/* ✅ IMAGE FIX: Alt property added to prevent build failure */}
               <div className="relative w-24 h-24 flex-shrink-0">
                 <Image
                   src={item.image || "/images/placeholder.webp"} 
-                  alt={item.name}
+                  alt={item.name || "Product Image"} // Fixed: Alt property added
                   fill
                   className="rounded-xl object-cover"
                 />
@@ -50,7 +50,7 @@ export default function CartPage() {
 
               {/* INFO */}
               <div className="flex-1 px-2">
-                <h3 className="font-semibold text-lg">{item.name}</h3>
+                <h3 className="font-semibold text-lg">{item.name || item.title}</h3>
                 <p className="text-gray-600">
                   ₹{item.price?.toLocaleString()}
                 </p>
@@ -59,7 +59,7 @@ export default function CartPage() {
                 <div className="flex items-center gap-4 mt-3">
                   <div className="flex items-center border rounded-lg">
                     <button
-                      onClick={() => updateQty(item.id, item.qty - 1)}
+                      onClick={() => updateQty(item.id, Math.max(1, item.qty - 1))}
                       className="w-10 h-10 flex items-center justify-center hover:bg-gray-100 transition"
                     >
                       −
@@ -90,7 +90,7 @@ export default function CartPage() {
         </div>
 
         {/* RIGHT: SUMMARY */}
-        <div className="border rounded-2xl p-6 h-fit bg-gray-50">
+        <div className="border rounded-2xl p-6 h-fit bg-gray-50 sticky top-24">
           <h3 className="text-xl font-semibold mb-4">Order Summary</h3>
 
           <div className="space-y-3 border-b pb-4">
@@ -100,13 +100,13 @@ export default function CartPage() {
             </div>
             <div className="flex justify-between text-gray-600">
               <span>Shipping</span>
-              <span className="text-green-600">FREE</span>
+              <span className="text-green-600 font-medium">FREE</span>
             </div>
           </div>
 
           <div className="flex justify-between py-4">
             <span className="text-lg font-bold">Total Amount</span>
-            <span className="text-lg font-bold">₹{cartTotal().toLocaleString()}</span>
+            <span className="text-lg font-bold text-black">₹{cartTotal().toLocaleString()}</span>
           </div>
 
           <Link
@@ -116,9 +116,12 @@ export default function CartPage() {
             Proceed to Checkout
           </Link>
           
-          <p className="text-center text-xs text-gray-400 mt-4 italic">
-            Secure checkout powered by Razorpay
-          </p>
+          <div className="flex items-center justify-center gap-2 mt-4">
+            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+            <p className="text-xs text-gray-500 italic">
+              Secure Checkout via WhatsApp
+            </p>
+          </div>
         </div>
       </div>
     </section>
