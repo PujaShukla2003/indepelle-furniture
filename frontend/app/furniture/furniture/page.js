@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { products } from "../data/products";
+import { products } from "../../data/products";
 import { useState } from "react";
 
 export default function FurniturePage() {
