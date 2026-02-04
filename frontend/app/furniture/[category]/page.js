@@ -15,9 +15,9 @@ export default function FurnitureCategoryPage({ params }) {
 
   // Ye data structure aapke image paths ke hisaab se hai
   const items = [
-    { id: `${category}-1`, title: `Premium ${category}`, price: 15999, rating: "4.4 (64 reviews)", img: "photo-1.avif" },
-    { id: `${category}-2`, title: `Luxury ${category}`, price: 24999, rating: "4.5 (92 reviews)", img: "photo-2.avif" },
-    { id: `${category}-3`, title: `Modern ${category}`, price: 32999, rating: "4.6 (118 reviews)", img: "photo-3.avif" },
+    { id: `${category}-1`, title: `Premium ${category}`, price: 115999, rating: "4.4 (64 reviews)", img: "photo-1.avif" },
+    { id: `${category}-2`, title: `Luxury ${category}`, price: 124999, rating: "4.5 (92 reviews)", img: "photo-2.avif" },
+    { id: `${category}-3`, title: `Modern ${category}`, price: 132999, rating: "4.6 (118 reviews)", img: "photo-3.avif" },
   ];
 
   return (

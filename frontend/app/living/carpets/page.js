@@ -24,7 +24,7 @@ export default function CarpetsPage() {
               product={{
                 id: `carpet-${i}`,
                 title: "Premium Handwoven Carpet",
-                price: 8999 + (i * 1000),
+                price: 45999 + (i * 5000),
                 image: `/images/decor/carpets/${img}`,
               }} 
               meta={{ rating: 4.7, reviews: 30 + i }} 

@@ -7,7 +7,7 @@ import ProductCard from "@/app/components/ProductCard";
 
 // 🔹 Price / rating generator specific to Decor
 function getDecorMeta(index) {
-  const prices = [1500, 2500, 4500, 7500, 12000];
+  const prices = [115000, 112500, 124500, 16500, 102000];
   const ratings = [4.2, 4.4, 4.5, 4.7, 4.8];
   const reviews = [12, 28, 45, 67, 89];
 

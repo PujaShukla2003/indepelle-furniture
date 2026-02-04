@@ -4,7 +4,7 @@ import ProductCard from "../../components/ProductCard"; // Path check kar lein (
 
 // 🔹 Price aur Rating helper
 function getProductMeta(index) {
-  const prices = [12999, 15499, 18999, 22999, 25999];
+  const prices = [112999, 115499, 118999, 122999, 125999];
   const ratings = [4.4, 4.5, 4.6, 4.7, 4.8];
   const reviews = [28, 45, 67, 89, 112];
 

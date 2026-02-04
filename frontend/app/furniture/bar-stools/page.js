@@ -4,7 +4,7 @@ import ProductCard from "../../components/ProductCard"; // Component ka sahi pat
 
 // Meta generator logic
 function getProductMeta(index) {
-  const prices = [9999, 12999, 15999, 18999, 22999];
+  const prices = [90999, 112999, 115999, 118999, 122999];
   const ratings = [4.3, 4.4, 4.5, 4.6, 4.8];
   const reviews = [41, 68, 92, 117, 164];
 

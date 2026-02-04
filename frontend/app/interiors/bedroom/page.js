@@ -9,14 +9,20 @@ export const metadata = {
 
 /* 🔹 Price / rating generator */
 function getBedroomMeta(index) {
-  const prices = [65000, 95000, 63000, 85000, 40000];
+  // Aapki range: 1.50L se 2.50L tak (Screenshot values included)
+  const prices = [229000, 219000, 150000, 185000, 235000, 195000, 249000];
   const ratings = [4.5, 4.6, 4.7, 4.8, 4.9];
   const reviews = [48, 72, 96, 131, 182];
+
+  // Dynamic titles for variety
+  const bedTypes = ["Chesterfield", "Stanford", "Indepelle Luxury", "Royal"];
+  const colors = ["Cognac", "Red", "Green", "Tan", "Black"];
 
   return {
     price: prices[index % prices.length],
     rating: ratings[index % ratings.length],
     reviews: reviews[index % reviews.length],
+    title: `${bedTypes[index % bedTypes.length]} Leather King Bed ${colors[index % colors.length]}`
   };
 }
 
@@ -47,9 +53,9 @@ export default function BedroomPage() {
             // 🔹 Data format for the ProductCard
             const product = {
               id: `bedroom-design-${i}`,
-              title: "Luxury Bedroom Design",
+              title: meta.title, // Ab title automatic badlega
               price: meta.price,
-              image: `/images/interiors/bedroom/${img}`, // Consistent single image string
+              image: `/images/interiors/bedroom/${img}`, 
             };
 
             return (

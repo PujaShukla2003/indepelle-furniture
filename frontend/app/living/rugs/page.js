@@ -35,7 +35,7 @@ export default function RugsPage() {
               product={{
                 id: `rug-${i}`,
                 title: "Premium Luxury Rug",
-                price: 7999 + i * 1000,
+                price: 39999 + i * 2000,
                 image: `/images/decor/rugs/${img}`,
               }}
               meta={{

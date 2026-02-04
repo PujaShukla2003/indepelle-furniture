@@ -54,7 +54,7 @@ function getAllImagesFromFolder(parentFolder) {
  * (future me API se replace kar sakti ho)
  */
 function getProductMeta(index) {
-  const prices = [12999, 24500, 8999, 45000, 15700];
+  const prices = [102999, 124500, 55000, 110000, 218999, 145000, 215700];
   return {
     price: prices[index % prices.length],
     rating: (4 + Math.random()).toFixed(1),

@@ -4,7 +4,7 @@ export const products = [
     id: "1",
     category: "sofas",
     name: "Luxury Fabric Sofa",
-    price: 24999,
+    price: 124999,
     images: [
       "https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg",
       "https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg",
@@ -26,7 +26,7 @@ export const products = [
     id: "2",
     category: "sofas",
     name: "Modern Wooden Sofa",
-    price: 29999,
+    price: 129999,
     images: [
       "https://images.unsplash.com/photo-1586023492125-27b2c045efd7",
       "https://images.unsplash.com/photo-1616627983427-9f7c8e77c7db",
@@ -48,7 +48,7 @@ export const products = [
     id: "3",
     category: "sofas",
     name: "Comfort Recliner Sofa",
-    price: 34999,
+    price: 134999,
     images: [
       "https://images.pexels.com/photos/276528/pexels-photo-276528.jpeg",
       "https://images.pexels.com/photos/5998050/pexels-photo-5998050.jpeg",
@@ -71,7 +71,7 @@ export const products = [
   id: "6",
   category: "bedroom",
   name: "Luxury King Size Bed",
-  price: 45999,
+  price: 245999,
   images: [
     "https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg",
     "https://images.pexels.com/photos/271624/pexels-photo-271624.jpeg",
@@ -114,7 +114,7 @@ export const products = [
   id: "8",
   category: "dining",
   name: "6 Seater Dining Table",
-  price: 38999,
+  price: 138999,
   images: [
     "https://images.pexels.com/photos/276528/pexels-photo-276528.jpeg",
     "https://images.pexels.com/photos/584399/pexels-photo-584399.jpeg",
@@ -135,7 +135,7 @@ export const products = [
   id: "9",
   category: "dining",
   name: "4 Seater Dining Set",
-  price: 28999,
+  price: 168999,
   images: [
     "https://images.pexels.com/photos/584399/pexels-photo-584399.jpeg",
     "https://images.pexels.com/photos/276528/pexels-photo-276528.jpeg",
@@ -157,7 +157,7 @@ export const products = [
   id: "10",
   category: "storage",
   name: "Wooden Wardrobe",
-  price: 49999,
+  price: 149999,
   images: [
     "https://images.pexels.com/photos/271816/pexels-photo-271816.jpeg",
     "https://images.pexels.com/photos/1648776/pexels-photo-1648776.jpeg",
@@ -178,7 +178,7 @@ export const products = [
   id: "11",
   category: "storage",
   name: "Modern Chest of Drawers",
-  price: 21999,
+  price: 131999,
   images: [
     "https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg",
     "https://images.pexels.com/photos/271816/pexels-photo-271816.jpeg",
@@ -201,7 +201,7 @@ export const products = [
     id: "4",
     category: "living",
     name: "Modern Living Chair",
-    price: 18999,
+    price: 118999,
     images: [
       "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg",
       "https://images.pexels.com/photos/1866149/pexels-photo-1866149.jpeg",
@@ -223,7 +223,7 @@ export const products = [
     id: "5",
     category: "living",
     name: "Luxury Living Sofa Set",
-    price: 42999,
+    price: 142999,
     images: [
       "https://images.pexels.com/photos/5998050/pexels-photo-5998050.jpeg",
       "https://images.pexels.com/photos/276528/pexels-photo-276528.jpeg",
@@ -245,7 +245,7 @@ export const products = [
     id: "6",
     category: "living",
     name: "Compact Living Armchair",
-    price: 15999,
+    price: 115999,
     images: [
       "https://images.pexels.com/photos/1350789/pexels-photo-1350789.jpeg",
       "https://images.pexels.com/photos/1571460/pexels-photo-1571460.jpeg",

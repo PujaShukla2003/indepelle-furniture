@@ -9,7 +9,7 @@ export const metadata = {
 
 // 🔹 Dummy price + rating + reviews generator
 function getProductMeta(index) {
-  const prices = [39999, 45999, 52999, 58999, 64999];
+  const prices = [269099, 222999, 242999, 258999, 164999];
   const ratings = [4.4, 4.5, 4.6, 4.7, 4.8];
   const reviews = [48, 74, 106, 138, 182];
 

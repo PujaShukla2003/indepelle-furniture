@@ -9,7 +9,7 @@ export const metadata = {
 };
 
 function getHomeOfficeMeta(index) {
-  const prices = [65000, 85000, 115000, 145000, 185000];
+  const prices = [165000, 185000, 115000, 145000, 185000];
   const ratings = [4.4, 4.5, 4.6, 4.7, 4.8];
   const reviews = [34, 58, 81, 119, 164];
   return {
