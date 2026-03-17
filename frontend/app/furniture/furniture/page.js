@@ -18,10 +18,12 @@ export default function FurniturePage() {
   }
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-12">
+    <section className="max-w-7xl mx-auto px-6 py-16 bg-white !opacity-100">
       {/* HEADER */}
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">All Furniture</h1>
+       <h1 className="text-4xl md:text-5xl font-serif font-semibold text-gray-900 !opacity-100">
+  All Furniture
+</h1>
 
         <select
           value={sort}

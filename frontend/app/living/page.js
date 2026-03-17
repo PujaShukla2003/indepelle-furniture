@@ -12,8 +12,10 @@ export default function RugsPage() {
   }
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-16">
-      <h1 className="text-4xl font-serif mb-12">Living Room Rugs</h1>
+    <section className="max-w-7xl mx-auto px-6 py-16 bg-white">
+      <h1 className="text-4xl font-serif font-semibold mb-12 text-gray-900">
+  Living Room Rugs
+</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
         {images.length === 0 ? (
           <p className="text-gray-500">No images found in /public/images/decor/rugs</p>

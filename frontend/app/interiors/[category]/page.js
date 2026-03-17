@@ -34,7 +34,7 @@ export default function InteriorCategoryPage({ params }) {
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-16">
-      <h1 className="text-4xl font-serif capitalize mb-10 border-b pb-4">
+      <h1 className="text-4xl md:text-5xl font-serif font-semibold capitalize mb-10 border-b pb-4 text-black">
         {category.replaceAll("-", " ")} Interior Designs
       </h1>
 

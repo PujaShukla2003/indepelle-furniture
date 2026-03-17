@@ -59,7 +59,7 @@ export default function InteriorGallery({ title, limit }) {
                     addToCart(item);
                     alert(`${item.title} cart mein add ho gaya!`);
                   }}
-                  className="py-2.5 px-4 border border-black rounded-lg text-xs font-bold uppercase hover:bg-gray-100 transition-colors"
+                  className="py-3 px-4 border-2 border-black rounded-full text-sm font-semibold uppercase text-black hover:bg-black hover:text-white transition-all duration-300"
                 >
                   Add to Cart
                 </button>

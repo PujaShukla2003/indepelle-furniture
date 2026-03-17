@@ -32,8 +32,10 @@ export default function LivingPage() {
   }
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-16">
-      <h1 className="text-4xl font-serif mb-12">Living Room Interior Designs</h1>
+    <section className="max-w-7xl mx-auto px-6 py-16 bg-white">
+      <h1 className="text-4xl font-serif font-semibold mb-12 text-gray-900">
+  Living Room Interior Designs
+</h1>
 
       {images.length === 0 ? (
         <div className="text-center py-20 border-2 border-dashed rounded-2xl">

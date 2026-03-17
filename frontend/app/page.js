@@ -70,7 +70,7 @@ export default function Home() {
   const living = getAllImagesFromFolder("images/decor");
 
   return (
-    <main className="space-y-24 bg-gray-50/50">
+    <main className="space-y-24 bg-white">
       <Hero />
       <CategoryGrid />
 
@@ -107,8 +107,8 @@ function Section({ title, link, items }) {
       {/* HEADER */}
       <div className="flex justify-between items-end mb-10 border-b pb-6">
         <div>
-          <h2 className="text-4xl font-serif mb-2">{title}</h2>
-          <p className="text-gray-500">
+          <h2 className="text-4xl font-serif mb-2 text-gray-900">{title}</h2>
+          <p className="text-gray-700">
             Explore our exclusive {title.toLowerCase()} collection
           </p>
         </div>

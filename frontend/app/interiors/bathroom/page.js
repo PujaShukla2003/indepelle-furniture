@@ -45,11 +45,10 @@ export default function BathroomPage() {
     );
 
   return (
-    <section className="max-w-7xl mx-auto px-6 py-16">
-      <h1 className="text-4xl font-serif mb-12">
-        Bathroom Interior Designs
-      </h1>
-
+   <section className="max-w-7xl mx-auto px-6 py-16 bg-white">
+      <h1 className="text-4xl font-serif font-semibold mb-12 text-gray-900">
+  Bathroom Interior Designs
+</h1>
       {images.length === 0 ? (
         <p className="text-gray-500">
           No bathroom images available

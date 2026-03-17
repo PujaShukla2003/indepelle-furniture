@@ -19,10 +19,10 @@ export default function RootLayout({ children }) {
           strategy="beforeInteractive"
         />
       </head>
-      <body className="antialiased">
+      <body className="antialiased bg-white text-black">
         <CartProvider>
           <Navbar />
-          <main className="min-h-screen">
+          <main className="min-h-screen bg-white">
             {children}
           </main>
           <Footer />

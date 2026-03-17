@@ -67,7 +67,7 @@ export default function Navbar() {
   return (
     <>
       {/* LOGO BAR */}
-      <div className="bg-black flex justify-center py-4 relative z-50">
+      <div className="bg-black flex justify-center py-1 relative z-50">
         <Link href="/" onClick={closeMobileMenu}>
           <Image
             src="/logo.webp"
@@ -84,7 +84,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 h-[64px] flex items-center justify-between">
 
           {/* DESKTOP MENU */}
-          <ul className="hidden lg:flex items-center gap-8 text-sm font-semibold flex-1 justify-center">
+          <ul className="hidden lg:flex items-center gap-8 text-sm font-semibold flex-1 justify-center text-black">
             <NavLink name="Home" link="/" />
 
             {menu.map((m) => (
@@ -123,7 +123,7 @@ export default function Navbar() {
                     <Link
                       key={item.name}
                       href={item.link}
-                      className="block px-5 py-2.5 text-sm hover:bg-gray-50"
+                      className="block px-5 py-2.5 text-sm hover:bg-gray-50 text-black"
                     >
                       {item.name}
                     </Link>
@@ -137,9 +137,9 @@ export default function Navbar() {
           </ul>
 
           {/* RIGHT SIDE */}
-          <div className="flex items-center gap-4 font-semibold">
+          <div className="flex items-center gap-4 font-semibold text-black">
             <div className="hidden lg:flex items-center gap-4">
-              <Link href="/login" className="hover:text-gray-600">
+              <Link href="/login" className="text-black hover:text-gray-600">
                 Login
               </Link>
               <Link
@@ -151,7 +151,7 @@ export default function Navbar() {
             </div>
 
             {/* CART */}
-            <Link href="/cart" className="relative p-2">
+           <Link href="/cart" className="relative p-2 text-black">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -267,7 +267,7 @@ export default function Navbar() {
 function NavLink({ name, link }) {
   return (
     <li className="relative group">
-      <Link href={link} className="py-2 uppercase tracking-wider">
+      <Link href={link} className="py-2 uppercase tracking-wider text-black hover:text-gray-700">
         {name}
       </Link>
       <span className="absolute left-0 bottom-0 w-0 h-[2px] bg-black transition-all group-hover:w-full" />

@@ -49,13 +49,13 @@ export default function ProductCard({ product, meta }) {
               addToCart(product);
               alert(`${product.title} added to cart!`);
             }}
-            className="py-2.5 border-2 border-black rounded-xl text-[10px] font-bold uppercase hover:bg-black hover:text-white transition-all duration-300"
+            className="py-2.5 border-2 border-black rounded-xl text-sm font-semibold uppercase text-black hover:bg-black hover:text-white transition-all duration-300"
           >
             Add to Cart
           </button>
           <button
             onClick={handleBuyNow}
-            className="py-2.5 bg-black text-white rounded-xl text-[10px] font-bold uppercase hover:bg-gray-800 transition-all duration-300"
+            className="py-2.5 bg-black text-white rounded-xl text-sm font-bold uppercase hover:bg-gray-800 transition-all duration-300"
           >
             Buy Now
           </button>

@@ -47,8 +47,7 @@ export default function CollectionGrid() {
               </div>
               
               {/* Image ke upar halka sa black shade (Overlay) */}
-              <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-500" />
-
+              <div className="absolute inset-0 bg-black/5 group-hover:bg-black/10 transition-all duration-500" />
               {/* Text Center mein ya Bottom left mein */}
               <div className="absolute bottom-8 left-8 text-white">
                 <h3 className="text-3xl font-serif font-medium mb-2">

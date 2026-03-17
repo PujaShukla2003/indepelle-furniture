@@ -38,7 +38,7 @@ export default function Hero() {
             }`}
             style={{ 
                 backgroundImage: `url(${slide.image})`,
-                filter: "brightness(1.1) opacity(0.15)" 
+                filter: "brightness(1.05)" 
             }}
           />
           <div className="absolute inset-0 bg-white/10 backdrop-blur-[1px]" />
